@@ -3,6 +3,8 @@ package com.android.launcher3.custom
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 
 /**
@@ -19,7 +21,7 @@ import android.util.Log
  * @author Beomyeol,Baek
  * @since 1.0
  */
-class BootCompleteReceiver : BroadcastReceiver(){
+class BootCompleteReceiver : BroadcastReceiver() {
 
     /**
      * Context

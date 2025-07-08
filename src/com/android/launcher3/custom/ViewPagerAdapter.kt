@@ -1,5 +1,6 @@
 package com.android.launcher3.custom
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -79,6 +80,7 @@ class ViewPagerAdapter(
                     holder.commandContainer.addView(textView)
                 }
             }
+            holder.trySayingTextAnimator.start()
         }else if(holder is ViewHolderTypeTwo){
             initSettingView(holder.binding)
         }
@@ -233,6 +235,18 @@ class ViewPagerAdapter(
     internal class ViewHolderTypeOne(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var commandContainer: LinearLayout =
             itemView.findViewById(R.id.ll_voice_command_container)
+        val trySayingTextAnimator by lazy {
+            ObjectAnimator.ofFloat(
+                itemView.findViewById(R.id.cl_try_saying_wrapper),
+                "alpha",
+                0f,
+                1f
+            ).apply {
+                duration = 1000
+                repeatMode = ObjectAnimator.REVERSE // 역방향 재생
+                repeatCount = ObjectAnimator.INFINITE // 무한 반복
+            }
+        }
     }
 
 

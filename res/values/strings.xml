@@ -452,5 +452,5 @@
 
     <string name="allow_device_control">Do you want to allow VisionX to control your device?</string>
     <string name="main_guide">*VisionX AI\n - Commands, voice recognition, headtracking mouse pointer, device control. \n\n *Audio Settings\n - Measure ambient noise and microphone sensitivity (noise ignore settings)</string>
-
+    <string name="try_saying">Try saying</string>
 </resources>

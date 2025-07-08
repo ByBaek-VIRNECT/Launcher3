@@ -129,6 +129,7 @@ import android.view.WindowManager.LayoutParams;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.window.BackEvent;
 import android.window.OnBackAnimationCallback;
 
@@ -139,6 +140,7 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.annotation.UiThread;
 import androidx.annotation.VisibleForTesting;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.WindowCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -618,13 +620,15 @@ public class Launcher extends StatefulActivity<LauncherState>
         mWorkspace.setVisibility(View.GONE);
 //        mScrimView.setVisibility(View.GONE);
         final Button btn = findViewById(R.id.test_btn);
+        final Button btn2 = findViewById(R.id.test_btn2);
+        final LinearLayout menus = findViewById(R.id.ll_menu_btns);
+//        final ConstraintLayout trySayingContainer = findViewById(R.id.cl_try_saying_wrapper);
         final ViewPager2 vp = findViewById(R.id.vp);
-        btn.bringToFront();
+        menus.bringToFront();
+//        trySayingContainer.bringToFront();
 
         if(_visionAiCommandBR == null){
             final VisionXSettingData data = VisionXSettingHelper.INSTANCE.readVisionXSettingData(this);
-
-            Log.d("by_debug", "data = "+data);
 
             _visionAiCommandBR = new VisionAiCommandBroadcastReceiver(commands -> {
                 ArrayList<PageInfo> list = new ArrayList<>();
@@ -655,6 +659,11 @@ public class Launcher extends StatefulActivity<LauncherState>
             } else {
                 registerReceiver(_visionAiCommandBR, filter);
             }
+
+            Intent i = new Intent("com.virnect.CHANGED_VISION_X_SETTING_VALUES");
+            i.putExtra("visionXSettingData",VisionXSettingHelper.INSTANCE.visionXSettingDataToJsonString());
+            i.setPackage("com.virnect.apps.visionx");
+            sendBroadcast(i);
         }
 
 
@@ -670,6 +679,13 @@ public class Launcher extends StatefulActivity<LauncherState>
                 getStateManager().goToState(LauncherState.ALL_APPS, true);
                 vp.setVisibility(View.GONE);
             }
+        });
+
+        btn2.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setAction("android.intent.action.RECENT_APPS");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         });
     }
 

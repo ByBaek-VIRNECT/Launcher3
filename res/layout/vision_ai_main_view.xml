@@ -18,4 +18,56 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_try_saying_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/try_saying_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_try_saying_mic"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/try_saying_ic_mic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_say_hello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_pretendard_regular"
+            android:includeFontPadding="false"
+            android:text="@string/try_saying"
+            android:textColor="@color/trySayingTextColor"
+            android:textFontWeight="600"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_try_saying_mic"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="12dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_say_hello"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_ripple"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -80,16 +80,38 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/test_btn"
+        <LinearLayout
+            android:id="@+id/ll_menu_btns"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_dark"
-            android:textColor="@android:color/white"
-            android:text="마이 앱스"
-            android:gravity="center"
             android:layout_gravity="end|bottom"
-            />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/test_btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_blue_dark"
+                android:textColor="@android:color/white"
+                android:text="마이 앱스"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_marginEnd="10dp"
+                />
+
+            <Button
+                android:id="@+id/test_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_blue_dark"
+                android:textColor="@android:color/white"
+                android:text="마이 앱스"
+                android:gravity="center"
+                />
+
+        </LinearLayout>
+
+
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp"
