@@ -249,7 +249,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
         // Add the search box above everything else.
         mSearchContainer = inflateSearchBox();
-//        addView(mSearchContainer);
+        addView(mSearchContainer);
         mSearchUiManager = (SearchUiManager) mSearchContainer;
     }
 

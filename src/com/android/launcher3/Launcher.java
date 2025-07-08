@@ -91,7 +91,6 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -123,12 +122,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnPreDrawListener;
-import android.view.WindowInsets;
-import android.view.WindowInsetsController;
 import android.view.WindowManager.LayoutParams;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Button;
 import android.window.BackEvent;
 import android.window.OnBackAnimationCallback;
 
@@ -139,8 +135,6 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.annotation.UiThread;
 import androidx.annotation.VisibleForTesting;
-import androidx.core.view.WindowCompat;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.launcher3.DropTarget.DragObject;
 import com.android.launcher3.accessibility.BaseAccessibilityDelegate.LauncherAction;
@@ -157,12 +151,6 @@ import com.android.launcher3.celllayout.CellPosMapper.CellPos;
 import com.android.launcher3.celllayout.CellPosMapper.TwoPanelCellPosMapper;
 import com.android.launcher3.compat.AccessibilityManagerCompat;
 import com.android.launcher3.config.FeatureFlags;
-import com.android.launcher3.custom.CommandReceivedListener;
-import com.android.launcher3.custom.PageInfo;
-import com.android.launcher3.custom.ViewPagerAdapter;
-import com.android.launcher3.custom.VisionAiCommandBroadcastReceiver;
-import com.android.launcher3.custom.VisionXSettingHelper;
-import com.android.launcher3.custom.vo.VisionXSettingData;
 import com.android.launcher3.dot.DotInfo;
 import com.android.launcher3.dragndrop.DragController;
 import com.android.launcher3.dragndrop.DragLayer;
@@ -363,8 +351,6 @@ public class Launcher extends StatefulActivity<LauncherState>
 
     private DropTargetBar mDropTargetBar;
 
-    private VisionAiCommandBroadcastReceiver _visionAiCommandBR;
-
     // Main container view for the all apps screen.
     @Thunk
     ActivityAllAppsContainerView<Launcher> mAppsView;
@@ -438,7 +424,6 @@ public class Launcher extends StatefulActivity<LauncherState>
     private BaseSearchConfig mBaseSearchConfig;
     private StartupLatencyLogger mStartupLatencyLogger;
     private CellPosMapper mCellPosMapper = CellPosMapper.DEFAULT;
-    private int prevPageNum = 0;
 
     @Override
     @TargetApi(Build.VERSION_CODES.S)
@@ -605,76 +590,6 @@ public class Launcher extends StatefulActivity<LauncherState>
         }
         setTitle(R.string.home_screen);
         mStartupLatencyLogger.logEnd(LAUNCHER_LATENCY_STARTUP_ACTIVITY_ON_CREATE);
-
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        getWindow().setDecorFitsSystemWindows(false);
-        getWindow().getInsetsController().hide(WindowInsets.Type.navigationBars());
-        getWindow().getInsetsController().setSystemBarsBehavior(
-                WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        );
-
-        getRootView().setOnApplyWindowInsetsListener((v, insets) -> WindowInsets.CONSUMED);
-//        mDragLayer.setVisibility(View.GONE);
-        mWorkspace.setVisibility(View.GONE);
-//        mScrimView.setVisibility(View.GONE);
-        final Button btn = findViewById(R.id.test_btn);
-        final ViewPager2 vp = findViewById(R.id.vp);
-        btn.bringToFront();
-
-        if(_visionAiCommandBR == null){
-            final VisionXSettingData data = VisionXSettingHelper.INSTANCE.readVisionXSettingData(this);
-
-            Log.d("by_debug", "data = "+data);
-
-            _visionAiCommandBR = new VisionAiCommandBroadcastReceiver(commands -> {
-                ArrayList<PageInfo> list = new ArrayList<>();
-                list.add(new PageInfo(ViewPagerAdapter.VIEW_TYPE_VISION_AI_MAIN_VIEW));
-                list.add(new PageInfo(ViewPagerAdapter.VIEW_TYPE_VISION_AI_SETTING_VIEW));
-
-                vp.setAdapter(new ViewPagerAdapter(Launcher.this,list,commands));
-                vp.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                    @Override
-                    public void onPageSelected(int position) {
-                        super.onPageSelected(position);
-                        if(prevPageNum == 1 && position == 0){
-                            if(vp.getAdapter() instanceof ViewPagerAdapter adapter){
-                                adapter.savedVisionXSettingData();
-                            }
-                            Intent i = new Intent("com.virnect.CHANGED_VISION_X_SETTING_VALUES");
-                            i.putExtra("visionXSettingData",VisionXSettingHelper.INSTANCE.visionXSettingDataToJsonString());
-                            i.setPackage("com.virnect.apps.visionx");
-                            sendBroadcast(i);
-                        }
-                        prevPageNum = position;
-                    }
-                });
-            });
-            IntentFilter filter = new IntentFilter("com.virnect.ACTION_SEND_VISION_AI_COMMAND");
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                registerReceiver(_visionAiCommandBR, filter, Context.RECEIVER_EXPORTED);
-            } else {
-                registerReceiver(_visionAiCommandBR, filter);
-            }
-        }
-
-
-        btn.setOnClickListener(v -> {
-            //show all apps
-            Log.d("by_debug", "onClick ! state = "+getStateManager().getState());
-            if (getStateManager().getState() == LauncherState.ALL_APPS) {
-                // All Apps가 열려 있으면 닫기 (홈으로 가기)
-                getStateManager().goToState(LauncherState.NORMAL, true);
-                vp.setVisibility(View.VISIBLE);
-            } else {
-                // 홈 화면이면 All Apps 열기
-                getStateManager().goToState(LauncherState.ALL_APPS, true);
-                vp.setVisibility(View.GONE);
-            }
-        });
-    }
-
-    private void initVisionXSettings(){
-//        final String sttType = getSharedPreferences()
     }
 
     /**
@@ -1425,7 +1340,6 @@ public class Launcher extends StatefulActivity<LauncherState>
         mOverviewPanel = findViewById(R.id.overview_panel);
         mHotseat = findViewById(R.id.hotseat);
         mHotseat.setWorkspace(mWorkspace);
-        mHotseat.setVisibility(View.GONE);
 
         // Setup the drag layer
         mDragLayer.setup(mDragController, mWorkspace);
@@ -1874,10 +1788,6 @@ public class Launcher extends StatefulActivity<LauncherState>
     public void onDestroy() {
         super.onDestroy();
         ACTIVITY_TRACKER.onActivityDestroyed(this);
-
-        if(_visionAiCommandBR != null){
-            unregisterReceiver(_visionAiCommandBR);
-        }
 
         ScreenOnTracker.INSTANCE.get(this).removeListener(mScreenOnListener);
         mWorkspace.removeFolderListeners();
