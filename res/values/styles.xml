@@ -426,4 +426,8 @@
         <item name="horizontalPadding">16dp</item>
     </style>
 
+    <style name="settingsRadioButton" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/folder_pagination_color_light</item>
+        <item name="android:textColorSecondary">#ffaeaeae</item>
+    </style>
 </resources>

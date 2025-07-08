@@ -83,14 +83,15 @@ public abstract class BaseLauncherBinder {
      * Binds all loaded data to actual views on the main thread.
      */
     public void bindWorkspace(boolean incrementBindId, boolean isBindSync) {
-        if (FeatureFlags.ENABLE_WORKSPACE_LOADING_OPTIMIZATION.get()) {
+        Log.d("by_debug", "optimization ? "+FeatureFlags.ENABLE_WORKSPACE_LOADING_OPTIMIZATION.get());
+//        if (FeatureFlags.ENABLE_WORKSPACE_LOADING_OPTIMIZATION.get()) {
             DisjointWorkspaceBinder workspaceBinder =
                     initWorkspaceBinder(incrementBindId, mBgDataModel.collectWorkspaceScreens());
             workspaceBinder.bindCurrentWorkspacePages(isBindSync);
             workspaceBinder.bindOtherWorkspacePages();
-        } else {
-            bindWorkspaceAllAtOnce(incrementBindId, isBindSync);
-        }
+//        } else {
+//            bindWorkspaceAllAtOnce(incrementBindId, isBindSync);
+//        }
     }
 
     /**
@@ -425,8 +426,19 @@ public abstract class BaseLauncherBinder {
                 appWidgets = new ArrayList<>(mBgDataModel.appWidgets);
             }
 
+            for (ItemInfo workspaceItem : workspaceItems) {
+                Log.d("by_debug", "workspaceItem : "+workspaceItem.title);
+            }
+
             workspaceItems.removeIf(it -> mBoundItemIds.contains(it.id));
             appWidgets.removeIf(it -> mBoundItemIds.contains(it.id));
+//            collectWorkspaceScreens
+            Log.d("by_debug", "workspaceItems : "+workspaceItems.size());
+            Log.d("by_debug", "workspaceScreens : "+mBgDataModel.collectWorkspaceScreens());
+
+            for (Integer collectWorkspaceScreen : mBgDataModel.collectWorkspaceScreens()) {
+                Log.d("by_debug", "collectWorkspaceScreen : "+collectWorkspaceScreen);
+            }
 
             sortWorkspaceItemsSpatially(mApp.getInvariantDeviceProfile(), workspaceItems);
 

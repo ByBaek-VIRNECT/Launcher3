@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/cl_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/tv_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:keepScreenOn="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/main_guide"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_enable_audio_log_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="10dp"
+            android:includeFontPadding="false"
+            android:text="Show decibel debug view"
+            android:textColor="#ffffffff"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settings_root" />
+
+        <RadioGroup
+            android:id="@+id/rg_audio_log_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_enable_audio_log_view">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rb_visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:includeFontPadding="false"
+                android:text="VISIBLE"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:theme="@style/settingsRadioButton" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rb_gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:includeFontPadding="false"
+                android:text="GONE"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:theme="@style/settingsRadioButton" />
+        </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/tv_stt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="10dp"
+            android:includeFontPadding="false"
+            android:text="TTS"
+            android:textColor="#ffffffff"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_audio_log_view" />
+
+        <RadioGroup
+            android:id="@+id/rg_tts_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_stt">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rb_tts_on"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:includeFontPadding="false"
+                android:text="ON"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:theme="@style/settingsRadioButton" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/rb_tts_off"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:includeFontPadding="false"
+                android:text="OFF"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:theme="@style/settingsRadioButton" />
+        </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/tv_voice_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="10dp"
+            android:text="GenAI Speech recognition interval(ms)"
+            android:textColor="#FFFFFF"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_tts_view" />
+
+        <EditText
+            android:id="@+id/et_voice_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF"
+            android:inputType="number"
+            android:padding="4dp"
+            android:textColor="#000000"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_voice_interval" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/settings_root"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#aa000000"
+            android:padding="14dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_stt_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:includeFontPadding="false"
+                android:text="STT"
+                android:textColor="#ffffffff"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/rg_stt_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/tv_stt_type">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_whisper_sync_stt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:includeFontPadding="false"
+                    android:text="Whisper"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:theme="@style/settingsRadioButton" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_google_streaming_stt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:includeFontPadding="false"
+                    android:visibility="gone"
+                    android:text="Google"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:theme="@style/settingsRadioButton" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_whisper_cpp_stt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:includeFontPadding="false"
+                    android:text="Whisper.cpp"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:theme="@style/settingsRadioButton" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_llm_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:includeFontPadding="false"
+                android:text="LLM"
+                android:textColor="#ffffffff"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rg_stt_type" />
+
+            <RadioGroup
+                android:id="@+id/rg_llm_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/tv_llm_type">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_virnect_llm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:includeFontPadding="false"
+                    android:text="Virnect"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:theme="@style/settingsRadioButton" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_open_ai_llm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:includeFontPadding="false"
+                    android:text="OpenAI"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:theme="@style/settingsRadioButton"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_chat_x_llm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:includeFontPadding="false"
+                    android:text="ChatX"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:theme="@style/settingsRadioButton" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_server_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:includeFontPadding="false"
+                android:text="Target Server"
+                android:textColor="#ffffffff"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rg_llm_type" />
+
+            <RadioGroup
+                android:id="@+id/rg_server_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/tv_server_info">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_public"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:includeFontPadding="false"
+                    android:text="PUBLIC"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:theme="@style/settingsRadioButton" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_onpremise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:includeFontPadding="false"
+                    android:text="ONPREMISE"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:theme="@style/settingsRadioButton" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_remote_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:includeFontPadding="false"
+                android:text="Target REMOTE APP"
+                android:textColor="#ffffffff"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rg_server_type" />
+
+            <RadioGroup
+                android:id="@+id/rg_remote_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/tv_remote_info">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_realwear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:includeFontPadding="false"
+                    android:text="REALWEAR"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:theme="@style/settingsRadioButton" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb_mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:includeFontPadding="false"
+                    android:text="MOBILE"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:theme="@style/settingsRadioButton" />
+            </RadioGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <Button
+            android:id="@+id/btn_visionx_ai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
+            android:text="VisionX AI"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <Button
+            android:id="@+id/btn_open_remote_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Run Remote"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/btn_visionx_ai" />
+
+        <TextView
+            android:id="@+id/tv_chat_x_account_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:text="ChatX Account info"
+            android:textColor="#FFFFFF"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_chatx_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID : "
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@id/et_chatx_id"
+            app:layout_constraintRight_toLeftOf="@id/et_chatx_id"
+            app:layout_constraintTop_toTopOf="@id/et_chatx_id" />
+
+        <EditText
+            android:id="@+id/et_chatx_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="#FFFFFF"
+            android:padding="4dp"
+            android:textColor="#000000"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_chat_x_account_label" />
+
+        <TextView
+            android:id="@+id/tv_chatx_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PWD : "
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@id/et_chatx_pwd"
+            app:layout_constraintRight_toLeftOf="@id/et_chatx_pwd"
+            app:layout_constraintTop_toTopOf="@id/et_chatx_pwd" />
+
+        <EditText
+            android:id="@+id/et_chatx_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="20dp"
+            android:background="#FFFFFF"
+            android:padding="4dp"
+            android:textColor="#000000"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_chatx_id" />
+
+        <TextView
+            android:id="@+id/tv_remote_caller_account_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:text="REMOTE caller account info"
+            android:textColor="#FFFFFF"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_chatx_pwd" />
+
+        <TextView
+            android:id="@+id/tv_remote_caller_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID : "
+            android:textColor="#FFFFFF"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/et_remote_caller_id"
+            app:layout_constraintRight_toLeftOf="@id/et_remote_caller_id"
+            app:layout_constraintTop_toTopOf="@id/et_remote_caller_id" />
+
+        <EditText
+            android:id="@+id/et_remote_caller_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="20dp"
+            android:background="#FFFFFF"
+            android:padding="4dp"
+            android:textColor="#000000"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_remote_caller_account_label" />
+
+        <TextView
+            android:id="@+id/tv_remote_caller_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PWD : "
+            android:textColor="#FFFFFF"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/et_remote_caller_pwd"
+            app:layout_constraintRight_toLeftOf="@id/et_remote_caller_pwd"
+            app:layout_constraintTop_toTopOf="@id/et_remote_caller_pwd" />
+
+        <EditText
+            android:id="@+id/et_remote_caller_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="20dp"
+            android:background="#FFFFFF"
+            android:padding="4dp"
+            android:text="123456"
+            android:textColor="#000000"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_remote_caller_id" />
+
+        <TextView
+            android:id="@+id/tv_remote_callee_account_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="right"
+            android:layout_marginRight="20dp"
+            android:text="REMOTE callee accounts info\n(*The first ID is the leader, and the others are members, separated by commas.)"
+            android:textColor="#FFFFFF"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_remote_caller_pwd" />
+
+        <TextView
+            android:id="@+id/tv_remote_callee_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID : "
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@id/et_remote_callee_id"
+            app:layout_constraintRight_toLeftOf="@id/et_remote_callee_id"
+            app:layout_constraintTop_toTopOf="@id/et_remote_callee_id" />
+
+        <EditText
+            android:id="@+id/et_remote_callee_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="20dp"
+            android:background="#FFFFFF"
+            android:padding="4dp"
+            android:textColor="#000000"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_remote_callee_account_label" />
+
+        <TextView
+            android:id="@+id/tv_remote_workspace_id_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:text="REMOTE Workspace ID"
+            android:textColor="#FFFFFF"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_remote_callee_id" />
+
+        <EditText
+            android:id="@+id/et_remote_workspace_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="20dp"
+            android:background="#FFFFFF"
+            android:padding="4dp"
+            android:textColor="#000000"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_remote_workspace_id_label" />
+
+        <Button
+            android:id="@+id/btn_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="Video"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/btn_record" />
+
+
+        <Button
+            android:id="@+id/btn_visionx_copilot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Copilot test"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/btn_camera"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <Button
+            android:id="@+id/btn_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Camera test"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/btn_mouse_cursor"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <Button
+            android:id="@+id/btn_mouse_cursor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Mouse pointer test"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/btn_audio_settings"
+            app:layout_constraintRight_toRightOf="parent" />
+
+
+        <Button
+            style="@style/Theme.AppCompat.Light.NoActionBar"
+            android:id="@+id/btn_audio_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Manual mic settings"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <Button
+            android:id="@+id/btn_audio_settings_smart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="Smart mic settings"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <Button
+            android:id="@+id/btn_stt_api_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:text="Virnect STT comm. test"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_gcp_stt_api_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:text="GCP STT comm. test"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_stt_api_test" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
